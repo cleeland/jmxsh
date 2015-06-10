@@ -71,5 +71,21 @@
       </fileset>
     </one-jar>
   </target>
+
+  <target name="rpm" depends="tar">
+    <exec executable="rpmbuild">
+      <arg value="-ta"/>
+      <arg value="jmxsh-1.0-1.tar.gz"/>
+    </exec>
+  </target>
   
+  <target name="tar" depends="app">
+    <tar destfile="jmxsh-1.0-1.tar.gz" compression="gzip">
+         <tarfileset dir=".">
+           <include name="jmxsh"/>
+           <include name="jmxsh.jar"/>
+           <include name="jmxsh.spec"/>
+         </tarfileset>
+    </tar>
+  </target>
 </project>
