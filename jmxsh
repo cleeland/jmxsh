@@ -8,6 +8,23 @@
 #
 # You'll need to modify this when you find a place to jmxsh.
 #
-JMXSH_JARFILE=./jmxsh.jar
+for i in . /usr/lib
+do
+  if [ -f $i/jmxsh.jar ]; then
+    JMXSH_JARFILE=$i/jmxsh.jar
+    break;
+  fi
+done
 
-exec java -jar $JMXSH_JARFILE "$@"
+if [ -z "JMXSH_JARFILE" ]; then
+  echo "ERROR: Cannot find jmxsh.jar."
+  exit 1
+fi
+
+if [ -n "$JAVA_HOME" ]; then
+  JAVA=$JAVA_HOME/bin/java
+else
+  JAVA=java
+fi
+
+exec $JAVA -jar $JMXSH_JARFILE "$@"
