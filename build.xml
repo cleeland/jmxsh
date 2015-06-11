@@ -81,8 +81,10 @@
   
   <target name="tar" depends="app">
     <tar destfile="jmxsh-1.0-1.tar.gz" compression="gzip">
-         <tarfileset dir=".">
+         <tarfileset dir="." filemode="555">
            <include name="jmxsh"/>
+         </tarfileset>
+         <tarfileset dir=".">
            <include name="jmxsh.jar"/>
            <include name="jmxsh.spec"/>
          </tarfileset>
