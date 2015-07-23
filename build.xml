@@ -72,8 +72,11 @@
     </one-jar>
   </target>
 
+  <property name="base.dir" location="."/>
   <target name="rpm" depends="tar">
     <exec executable="rpmbuild">
+      <arg value="--define"/>
+      <arg value="_topdir ${user.dir}/rpmbuild"/>
       <arg value="-ta"/>
       <arg value="jmxsh-1.0-1.tar.gz"/>
     </exec>
