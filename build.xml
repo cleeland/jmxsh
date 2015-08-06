@@ -11,6 +11,10 @@
   <property name="doc"      location="${build}/doc"/>   
   <property name="blib"     location="${build}/lib"/>
 
+  <property name="version"  value="1.0"/>
+  <property name="release"  value="1"/>
+  <property name="tarball"  location="jmxsh-${version}-${release}.tar.gz"/>
+
   <path id="classpath.path">
     <fileset dir="${lib}"> <include name="**/*.jar"/> </fileset>
     <pathelement location="${classes}"/>
@@ -22,11 +26,14 @@
     <mkdir dir="${test}"/>
     <mkdir dir="${doc}"/>
     <mkdir dir="${blib}"/>
-    <mkdir dir="${bbinlib}"/>
+    <mkdir dir="${binlib}"/>
   </target>   
 
   <target name="clean">
     <delete dir="${build}"/>
+    <delete file="${tarball}"/>
+    <delete file="jmxsh.jar"/>
+    <delete dir="rpmbuild"/>
   </target>
   
   <target name="compile" depends="init">
@@ -78,12 +85,12 @@
       <arg value="--define"/>
       <arg value="_topdir ${user.dir}/rpmbuild"/>
       <arg value="-ta"/>
-      <arg value="jmxsh-1.0-1.tar.gz"/>
+      <arg value="${tarball}"/>
     </exec>
   </target>
   
   <target name="tar" depends="app">
-    <tar destfile="jmxsh-1.0-1.tar.gz" compression="gzip">
+    <tar destfile="${tarball}" compression="gzip">
          <tarfileset dir="." filemode="555">
            <include name="jmxsh"/>
          </tarfileset>
