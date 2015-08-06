@@ -14,11 +14,17 @@
   <property name="version"  value="1.0"/>
   <property name="release"  value="1"/>
   <property name="tarball"  location="jmxsh-${version}-${release}.tar.gz"/>
+  <property name="publish.dir" location="/code/ExegyRPM/jmxsh"/>
 
   <path id="classpath.path">
     <fileset dir="${lib}"> <include name="**/*.jar"/> </fileset>
     <pathelement location="${classes}"/>
   </path>
+
+  <fileset id="rpms.built"
+           dir="rpmbuild"
+           includes="**/*.rpm">
+  </fileset>
 
   <target name="init">
     <mkdir dir="${build}"/>   
@@ -99,5 +105,11 @@
            <include name="jmxsh.spec"/>
          </tarfileset>
     </tar>
+  </target>
+
+  <target name="publish" depends="rpm">
+    <copy todir="${publish.dir}" flatten="true">
+      <fileset refid="rpms.built"/>
+    </copy>
   </target>
 </project>
